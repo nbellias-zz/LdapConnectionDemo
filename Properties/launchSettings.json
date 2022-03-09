@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "LdapConnectionDemo": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
