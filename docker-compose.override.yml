@@ -1,26 +1,16 @@
 version: '3.4'
 
 services:
- myopenldap:
-    image: osixia/openldap:${OPENLDAP_TAG}
-    container_name: myopenldap
-    environment:
-      - LDAP_ORGANISATION=Cosmos Devlab
-      - LDAP_DOMAIN=devlab.local
-      - LDAP_ADMIN_PASSWORD=${OPENLDAP_PASS}
-      - LDAP_BASE_DN=dc=devlab,dc=local
-    ports:
-      - "389:389"
-    command: --copy-service
-    volumes:
-      - ./openldap/bootstrap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
-      - ./volumes/openldap/data:/var/lib/ldap
-      - ./volumes/openldap/config:/etc/ldap/slapd.d
+  ldapconnectiondemo:
+    image: ${DOCKER_REGISTRY-}ldapconnectiondemo
+    container_name: ldapconnectiondemo
+    depends_on:
+      - myopenldap
     networks:
       - myldap-network
     restart: unless-stopped
 
- myphpldapadmin:
+  myphpldapadmin:
     image: osixia/phpldapadmin:${PHPLDAPADMIN_TAG}
     container_name: myphpldapadmin
     environment:
@@ -30,6 +20,25 @@ services:
       - "8056:80"
     depends_on:
       - myopenldap
+    networks:
+      - myldap-network
+    restart: unless-stopped
+
+  myopenldap:
+    image: osixia/openldap:${OPENLDAP_TAG}
+    container_name: myopenldap
+    environment:
+      - LDAP_ORGANISATION=MySystem
+      - LDAP_DOMAIN=mydomain.home
+      - LDAP_ADMIN_PASSWORD=${OPENLDAP_PASS}
+      - LDAP_BASE_DN=dc=mydomain,dc=home
+    ports:
+      - "389:389"
+    command: --copy-service
+    volumes:
+      - ./openldap/bootstrap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+      - ./volumes/openldap/data:/var/lib/ldap
+      - ./volumes/openldap/config:/etc/ldap/slapd.d
     networks:
       - myldap-network
     restart: unless-stopped

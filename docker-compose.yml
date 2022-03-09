@@ -9,12 +9,12 @@ services:
     depends_on:
       - myopenldap
 
-  myopenldap:
-    image: osixia/openldap:${OPENLDAP_TAG}
-    container_name: myopenldap
-
   myphpldapadmin:
     image: osixia/phpldapadmin:${PHPLDAPADMIN_TAG}
     container_name: myphpldapadmin
     depends_on:
       - myopenldap
+
+  myopenldap:
+    image: osixia/openldap:${OPENLDAP_TAG}
+    container_name: myopenldap

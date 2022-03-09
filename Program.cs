@@ -3,12 +3,12 @@
 
 using Novell.Directory.Ldap;
 
-const string ldapHost = "192.168.178.4";
+const string ldapHost = "myopenldap";
 const int ldapPort = 389;
-const string domainComponent = ",dc=devlab,dc=local";
+const string domainComponent = ",dc=mydomain,dc=home";
 
 Console.WriteLine("LDAP authentication demo!");
-Console.WriteLine(ldapAuthenticate("achmakiss","a.123456"));
+Console.WriteLine(ldapAuthenticate("makrivou","evanthia00"));
 
 
 string ldapAuthenticate(string userName, string passWord)
@@ -23,7 +23,7 @@ string ldapAuthenticate(string userName, string passWord)
         cn.Bind("cn=" + userName + domainComponent, passWord);
 
         //Console.WriteLine(cn.WhoAmI());
-        //Console.WriteLine(cn.FetchSchema("cn=" + userName + ",dc=devlab,dc=local"));
+        //Console.WriteLine(cn.FetchSchema("cn=" + userName + ",dc=mydomain,dc=home"));
 
         cn.Disconnect();
     }
